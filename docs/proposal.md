@@ -101,8 +101,6 @@ Since Monte Carlo methods are highly parallelizable, even a mid-scale FPGA can e
 
 The goal of this project is to compare CPU and FPGA performance rather than maximize hardware utilization, making this platform appropriate for experimental evaluation.
 
-Additionally, this FPGA platform is similar to the one used in 18-240, which will allow for a more comfortable and efficient development process.
-
 ---
 
 # Timeline
