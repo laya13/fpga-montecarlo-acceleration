@@ -3,11 +3,11 @@
 ## Pipeline Structure
 
 RNG
-↓
+->
 GBM Stock Update
-↓
+->
 Payoff Logic
-↓
+->
 Accumulator
 
 ## Parallelism Strategy

@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include <time.h>
+#include "montecarlo.c"
+
+/* Measures runtime and throughput of Monte Carlo simulation.
+   METRICS:
+   - execution time
+   - simulations per second
+ */
+
+int main() {
+    int N = 1000000;
+    struct timespec start, end;
+    clock_gettime(CLOCK_MONOTONIC, &start);
+    double price = monte_carlo_price(N);
+    clock_gettime(CLOCK_MONOTONIC, &end);
+
+    double time_taken =
+        (end.tv_sec - start.tv_sec) +
+        (end.tv_nsec - start.tv_nsec) / 1e9;
+
+    printf("Monte Carlo Price: %f\n", price);
+    printf("Time Taken: %f seconds\n", time_taken);
+    printf("Simulations/sec: %f\n", N / time_taken);
+
+    return 0;
+}
