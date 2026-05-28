@@ -8,17 +8,27 @@
    - simulations per second
  */
 
-int main() {
-    int N = 1000000;
+int main(int argc, char *argv[]) {
+
+    int N = 1000000; // default
+
+    if (argc > 1) {
+        N = atoi(argv[1]);
+    }
+
     struct timespec start, end;
+
     clock_gettime(CLOCK_MONOTONIC, &start);
+
     double price = monte_carlo_price(N);
+
     clock_gettime(CLOCK_MONOTONIC, &end);
 
     double time_taken =
         (end.tv_sec - start.tv_sec) +
         (end.tv_nsec - start.tv_nsec) / 1e9;
 
+    printf("N = %d\n", N);
     printf("Monte Carlo Price: %f\n", price);
     printf("Time Taken: %f seconds\n", time_taken);
     printf("Simulations/sec: %f\n", N / time_taken);
