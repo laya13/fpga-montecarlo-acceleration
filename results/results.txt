@@ -1,0 +1,20 @@
+N = 100
+Monte Carlo Price: 10.392409
+Time Taken: 0.000397 seconds
+Simulations/sec: 251889.168766
+N = 1000
+Monte Carlo Price: 10.322002
+Time Taken: 0.000060 seconds
+Simulations/sec: 16666666.666667
+N = 10000
+Monte Carlo Price: 10.462597
+Time Taken: 0.000610 seconds
+Simulations/sec: 16393442.622951
+N = 100000
+Monte Carlo Price: 10.410076
+Time Taken: 0.005769 seconds
+Simulations/sec: 17334026.694401
+N = 1000000
+Monte Carlo Price: 10.431506
+Time Taken: 0.053133 seconds
+Simulations/sec: 18820695.236482

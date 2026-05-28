@@ -4,24 +4,113 @@
 
 ## May 14, 2026
 
-### Project Scope Decisions
-- Focus on European call options only
-- Use Black-Scholes as correctness baseline
-- Start with one-step GBM model instead of multi-step paths
+- scoped project to European call options only  
+- using Black-Scholes as baseline  
+- start with 1-step GBM model (no multi-step paths)
 
-### Why
-- Keeps FPGA arithmetic manageable
-- Easier fixed-point implementation
-- Easier benchmarking
+- MC is parallel by design (independent paths)  
+- Box-Muller might be too heavy for FPGA (log/sqrt/cos)
 
-### Research Notes
-- Monte Carlo highly parallelizable because paths independent
-- Box-Muller may be expensive on FPGA due to transcendental functions
+- questions:
+  - LFSR vs Box-Muller?
+  - how many lanes can 18-240 FPGA handle?
 
-### Questions
-- Should FPGA RNG use LFSR?
-- How many lanes feasible on 18-240 board?
+- TODO:
+  - write Gaussian RNG in C  
+  - set up timing/benchmark code  
 
-### TODO
-- Implement Gaussian RNG in C
-- Build benchmark timing infrastructure
+---
+
+## May 16, 2026
+
+- set up CPU code structure  
+- split into:
+  - rng
+  - gbm
+  - payoff
+  - accumulator  
+
+- MC loop is straightforward now
+
+- issues:
+  - needed -lm for math
+  - unclear where “final step” is (fixed: avg + discount)
+
+- bottleneck likely exp / sqrt / log  
+
+- TODO:
+  - implement Box-Muller  
+  - add Black-Scholes  
+  - start benchmarking  
+
+---
+
+## May 18, 2026
+
+- added Black-Scholes for comparison baseline  
+- MC vs BS comparison will be main accuracy check  
+
+- MC = simulation  
+- BS = closed form  
+
+- unsure about acceptable error range  
+
+- TODO:
+  - implement BS fully in C  
+  - compare outputs vs MC  
+
+---
+
+## May 20, 2026
+
+- Box-Muller chosen for CPU  
+- probably not viable for FPGA (too many heavy ops)
+
+- FPGA RNG likely:
+  - LFSR
+  - LUT approximations  
+
+- tradeoff = accuracy vs speed  
+
+- TODO:
+  - benchmark Box-Muller cost  
+  - look into LFSR quality  
+
+---
+
+## May 23, 2026
+
+- started thinking about benchmarking  
+- need:
+  - runtime vs N
+  - sims/sec
+  - scaling curve  
+
+- plan:
+  - clock_gettime for timing  
+  - dump to CSV  
+
+- TODO:
+  - CSV logging  
+  - python plots  
+
+---
+
+## May 26, 2026
+
+- pipeline idea is clean:
+  - RNG → GBM → payoff → sum  
+
+- MC is embarrassingly parallel  
+
+- FPGA plan:
+  - start 1 lane  
+  - scale to 4–16 lanes  
+
+- questions:
+  - fixed-point format (Q format?)  
+  - DSP / LUT limits  
+
+- TODO:
+  - draw FPGA pipeline  
+  - define fixed-point scheme  

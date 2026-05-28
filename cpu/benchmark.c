@@ -28,10 +28,11 @@ int main(int argc, char *argv[]) {
         (end.tv_sec - start.tv_sec) +
         (end.tv_nsec - start.tv_nsec) / 1e9;
 
-    printf("N = %d\n", N);
-    printf("Monte Carlo Price: %f\n", price);
-    printf("Time Taken: %f seconds\n", time_taken);
-    printf("Simulations/sec: %f\n", N / time_taken);
+    printf("%d,%f,%f,%f\n",
+       N,
+       time_taken,
+       price,
+       N / time_taken);
 
     return 0;
 }
